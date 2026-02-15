@@ -1,0 +1,3 @@
+Training on Fold: 0
+model_path:../saved_model/test/NDL-day-OS_BCGNET_RFPA_GridSearch0_Huber_BCG1_PI1_FF1_seed0_N10_zscore1_e20_all_fluc-0-Model.pt
+training mode

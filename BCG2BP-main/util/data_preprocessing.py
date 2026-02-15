@@ -65,7 +65,7 @@ def loaddata(datapath, signal_type, training_scheme, batch_size=64):
     fs = 250
     seg_len = 200
     dim_spi = 4
-    dim_FF = 44
+    dim_FF = 9 # 44 zsy
 
     mat = loadmat(datapath)
     subject_ID = mat['data']['ID'][0]

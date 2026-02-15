@@ -87,7 +87,7 @@ class CombinedModel(nn.Module):
         super(CombinedModel, self).__init__()
         self.dim_BCG = 200
         self.dim_PI = 4
-        self.dim_FF = 44
+        self.dim_FF = 9 # 44 zsy
         self.transformer_model = TransformerModel(n_features=1, n_heads=8, n_layers=2, dropout=0.1)
         self.static_enrichment_module = StaticEnrichmentModule(input_dim=48, hidden_dim=48)
         self.fc1 = nn.Linear(output_transformer + output_SEM, hidden_dim)

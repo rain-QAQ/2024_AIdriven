@@ -43,4 +43,32 @@ def evaluate(pred, real):
     mean_error = np.mean(error, axis=0)
     # 计算标准差（Standard Deviation）
     std_dev = np.std(error, axis=0)
-    return mae, mean_error, std_dev
+    
+    # add_by_zsy: 计算PCC（皮尔逊相关系数）
+    # pred和real的shape为(n_samples, 2)，其中2维分别是DBP和SBP
+    
+    # 改进的PCC计算，处理特殊情况
+    def safe_corrcoef(x, y):
+        """安全计算相关系数，处理方差为0和样本数不足的情况"""
+        if len(x) < 2:
+            print('样本数不足')
+            return 0.0  # 样本数不足
+        
+        # 检查方差
+        if np.std(x) == 0 or np.std(y) == 0:
+            print('方差为0')
+            return 0.0  # 方差为0，无相关性
+        
+        # 正常计算
+        try:
+            corr_matrix = np.corrcoef(x, y)
+            return corr_matrix[0, 1]
+        except:
+            print('计算异常')
+            return 0.0  # 任何其他异常
+    
+    pcc_dbp = safe_corrcoef(pred[:, 0], real[:, 0])
+    pcc_sbp = safe_corrcoef(pred[:, 1], real[:, 1])
+    pcc = np.array([pcc_dbp, pcc_sbp])
+    
+    return mae, mean_error, std_dev, pcc

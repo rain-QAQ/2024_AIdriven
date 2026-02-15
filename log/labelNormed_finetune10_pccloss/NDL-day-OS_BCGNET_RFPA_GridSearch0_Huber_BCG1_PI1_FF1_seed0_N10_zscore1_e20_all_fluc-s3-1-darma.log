@@ -1,0 +1,88 @@
+Training on Fold: 0
+model_path:../saved_model/labelNormed_finetune10_pccloss/NDL-day-OS_BCGNET_RFPA_GridSearch0_Huber_BCG1_PI1_FF1_seed0_N10_zscore1_e20_all_fluc-0-Model.pt
+training mode
+  regression_loss: 0.0578
+  reconstruction_loss: 0.1469
+  pcc_loss: 1.0837
+saving model
+BPEstimator: [1/20] loss: 0.8181, val_loss: 0.6018
+Cunrrent ephoch run time: 13.913 s
+BPEstimator: [2/20] loss: 0.5923, val_loss: 0.8265
+Cunrrent ephoch run time: 12.686 s
+BPEstimator: [3/20] loss: 0.4433, val_loss: 1.3534
+Cunrrent ephoch run time: 12.744 s
+BPEstimator: [4/20] loss: 0.3974, val_loss: 0.9194
+Cunrrent ephoch run time: 12.755 s
+saving model
+BPEstimator: [5/20] loss: 0.3575, val_loss: 0.4640
+Cunrrent ephoch run time: 13.109 s
+BPEstimator: [6/20] loss: 0.3281, val_loss: 0.7935
+Cunrrent ephoch run time: 13.437 s
+saving model
+BPEstimator: [7/20] loss: 0.2929, val_loss: 0.3421
+Cunrrent ephoch run time: 13.049 s
+saving model
+BPEstimator: [8/20] loss: 0.2700, val_loss: 0.2325
+Cunrrent ephoch run time: 13.678 s
+saving model
+BPEstimator: [9/20] loss: 0.2419, val_loss: 0.1553
+Cunrrent ephoch run time: 13.004 s
+BPEstimator: [10/20] loss: 0.2127, val_loss: 0.1674
+Cunrrent ephoch run time: 13.079 s
+saving model
+BPEstimator: [11/20] loss: 0.1928, val_loss: 0.1400
+Cunrrent ephoch run time: 12.851 s
+saving model
+BPEstimator: [12/20] loss: 0.1766, val_loss: 0.1380
+Cunrrent ephoch run time: 12.758 s
+BPEstimator: [13/20] loss: 0.1651, val_loss: 0.1463
+Cunrrent ephoch run time: 12.646 s
+saving model
+BPEstimator: [14/20] loss: 0.1518, val_loss: 0.1114
+Cunrrent ephoch run time: 12.740 s
+BPEstimator: [15/20] loss: 0.1429, val_loss: 0.1123
+Cunrrent ephoch run time: 12.665 s
+saving model
+BPEstimator: [16/20] loss: 0.1333, val_loss: 0.1069
+Cunrrent ephoch run time: 12.805 s
+BPEstimator: [17/20] loss: 0.1305, val_loss: 0.1128
+Cunrrent ephoch run time: 12.602 s
+BPEstimator: [18/20] loss: 0.1293, val_loss: 0.1071
+Cunrrent ephoch run time: 12.595 s
+BPEstimator: [19/20] loss: 0.1225, val_loss: 0.1113
+Cunrrent ephoch run time: 12.621 s
+BPEstimator: [20/20] loss: 0.1196, val_loss: 0.1143
+Cunrrent ephoch run time: 12.622 s
+Fold 0 Loss曲线图已保存至: ../saved_model/labelNormed_finetune10_pccloss\NDL-day-OS_BCGNET_RFPA_GridSearch0_Huber_BCG1_PI1_FF1_seed0_N10_zscore1_e20_all_fluc_fold0_loss_curves.png
+[Fold:0] 
+MAE: (15.9228, 23.6460)
+ME : (6.0376, -14.7583)
+STD: (19.3822, 27.7500)
+PCC: (-0.0113, -0.0643)
+当前微调: X0132
+tensor([[0.4375, 0.3342],
+        [0.4572, 0.3510],
+        [0.4575, 0.3510],
+        [0.4494, 0.3192],
+        [0.4494, 0.2907],
+        [0.4494, 0.2907],
+        [0.5289, 0.2907],
+        [0.5576, 0.3074],
+        [0.5617, 0.3225],
+        [0.5711, 0.3541]], device='cuda:0')
+找到184个测试样本
+[X0132] 
+MAE: (4.6836, 10.5135)
+ME : (0.9050, 5.9984)
+STD: (6.1164, 12.7311)
+PCC: (0.1927, -0.1012)
+Fold 0 基础模型结果已保存至 ../result/labelNormed_finetune10_pccloss/NDL-day-OS_BCGNET_RFPA_GridSearch0_Huber_BCG1_PI1_FF1_seed0_N10_zscore1_e20_all_fluc-s3-1-darma-base_model_fold0.mat
+Training on Fold: 1
+model_path:../saved_model/labelNormed_finetune10_pccloss/NDL-day-OS_BCGNET_RFPA_GridSearch0_Huber_BCG1_PI1_FF1_seed0_N10_zscore1_e20_all_fluc-1-Model.pt
+training mode
+  regression_loss: 0.1153
+  reconstruction_loss: 0.4594
+  pcc_loss: 1.0402
+saving model
+BPEstimator: [1/20] loss: 0.8583, val_loss: 0.2491
+Cunrrent ephoch run time: 13.095 s

@@ -8,7 +8,8 @@ class Logger(object):
         filepath, _ = os.path.split(filename)
         if not os.path.exists(filepath):
             os.makedirs(filepath)
-        self.log = open(filename, 'w' if overwrite else 'a')
+        # change_by_zsy: 添加UTF-8编码支持，避免中文乱码
+        self.log = open(filename, 'w' if overwrite else 'a', encoding='utf-8')
 
     def write(self, message):
         self.terminal.write(message)

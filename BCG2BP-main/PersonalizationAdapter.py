@@ -160,13 +160,13 @@ def training_PA2(log, model, test_loader, fine_tune_loader, data_processor, para
             selected_features = []
             DL_feature_dim = 79
             if params['use_BCG']:
-                selected_features.append(fine_tune_features[:, :DL_feature_dim])
+                selected_features.append(fine_tune_features[:, :DL_feature_dim])  # DL特征：从BCG经过神经网络提取的特征，0-78维
             if params['use_PI']:
-                selected_features.append(fine_tune_features[:, DL_feature_dim:-44 - 2])
+                selected_features.append(fine_tune_features[:, DL_feature_dim:-9 - 2])  # change_by_zsy: PI特征：79-82维(4维) 原值-44改为-9
             if params['use_FF']:
-                selected_features.append(fine_tune_features[:, DL_feature_dim + 4: -2])
+                selected_features.append(fine_tune_features[:, DL_feature_dim + 4: -2])  # FF特征：83-91维(9维) 原值83-126维(44维)
             if params['use_LAST_BP']:
-                selected_features.append(fine_tune_features[:, -2:])
+                selected_features.append(fine_tune_features[:, -2:]) #Last BP：92-93维 (2维)  原值127-128维 (2维)
 
             # 将选择的特征拼接成最终的fine_tune_features_selected
             fine_tune_features_selected = torch.cat(selected_features, dim=1).detach().cpu().numpy()
@@ -224,8 +224,13 @@ def training_PA2(log, model, test_loader, fine_tune_loader, data_processor, para
                 # predictions = xgb_regressor.predict(test_features_selected)
                 predictions = best_model.predict(test_features_selected)
 
+                # add_by_zsy: 如果启用了BP归一化，需要在评估前反归一化
+                if data_processor.use_normalize_bp:
+                    predictions = data_processor.denormalize_bp(predictions)
+                    test_labels = data_processor.denormalize_bp(test_labels)
+                    
                 # 评估模型性能
-                mae, mean_error, std_dev = evaluate(predictions, test_labels)
+                mae, mean_error, std_dev, pcc = evaluate(predictions, test_labels)  # change_by_zsy: 添加PCC
 
                 results = {
                     'ID': id,
@@ -238,6 +243,7 @@ def training_PA2(log, model, test_loader, fine_tune_loader, data_processor, para
                 log('MAE: (%.4f, %.4f)' % (mae[0], mae[1]))
                 log('ME : (%.4f, %.4f)' % (mean_error[0], mean_error[1]))
                 log('STD: (%.4f, %.4f)' % (std_dev[0], std_dev[1]))
+                log('PCC: (%.4f, %.4f)' % (pcc[0], pcc[1]))  # add_by_zsy
 
     return PA_results_set
 
@@ -320,9 +326,9 @@ def training_PA(log, model, test_loader, fine_tune_loader, data_processor, param
             if params['use_BCG']:
                 selected_features.append(fine_tune_features[:, :DL_feature_dim])
             if params['use_PI']:
-                selected_features.append(fine_tune_features[:, DL_feature_dim:-44 - 2])
+                selected_features.append(fine_tune_features[:, DL_feature_dim:-9 - 2])  # change_by_zsy: 原值-44改为-9
             if params['use_FF']:
-                selected_features.append(fine_tune_features[:, DL_feature_dim + 4: -2])
+                selected_features.append(fine_tune_features[:, DL_feature_dim + 4: -2])  # change_by_zsy: 9维FF特征
             if params['use_LAST_BP']:
                 selected_features.append(fine_tune_features[:, -2:])
 
@@ -389,8 +395,13 @@ def training_PA(log, model, test_loader, fine_tune_loader, data_processor, param
                 else:
                     predictions = regressor.predict(test_features_selected)
 
+                # add_by_zsy: 如果启用了BP归一化，需要在评估前反归一化
+                if data_processor.use_normalize_bp:
+                    predictions = data_processor.denormalize_bp(predictions)
+                    test_labels = data_processor.denormalize_bp(test_labels)
+                    
                 # 评估模型性能
-                mae, mean_error, std_dev = evaluate(predictions, test_labels)
+                mae, mean_error, std_dev, pcc = evaluate(predictions, test_labels)  # change_by_zsy: 添加PCC
 
                 results = {
                     'ID': id,
@@ -403,6 +414,18 @@ def training_PA(log, model, test_loader, fine_tune_loader, data_processor, param
                 log('MAE: (%.4f, %.4f)' % (mae[0], mae[1]))
                 log('ME : (%.4f, %.4f)' % (mean_error[0], mean_error[1]))
                 log('STD: (%.4f, %.4f)' % (std_dev[0], std_dev[1]))
+                log('PCC: (%.4f, %.4f)' % (pcc[0], pcc[1]))  # add_by_zsy
+                
+                # add_by_zsy: 输出个性化模型的预测统计（诊断PCC）
+                # log('--- 个性化预测统计 ---')
+                # log('DBP预测: min=%.2f, max=%.2f, mean=%.2f, std=%.4f' % 
+                #     (predictions[:, 0].min(), predictions[:, 0].max(), predictions[:, 0].mean(), predictions[:, 0].std()))
+                # log('SBP预测: min=%.2f, max=%.2f, mean=%.2f, std=%.4f' % 
+                #     (predictions[:, 1].min(), predictions[:, 1].max(), predictions[:, 1].mean(), predictions[:, 1].std()))
+                # log('DBP真实: min=%.2f, max=%.2f, mean=%.2f, std=%.4f' % 
+                #     (test_labels[:, 0].min(), test_labels[:, 0].max(), test_labels[:, 0].mean(), test_labels[:, 0].std()))
+                # log('SBP真实: min=%.2f, max=%.2f, mean=%.2f, std=%.4f' % 
+                #     (test_labels[:, 1].min(), test_labels[:, 1].max(), test_labels[:, 1].mean(), test_labels[:, 1].std()))
 
     return PA_results_set, shap_values, fine_tune_features_selected
 

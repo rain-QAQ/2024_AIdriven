@@ -77,7 +77,7 @@ class CombinedModel(nn.Module):
 
         self.dim_BCG = 200
         self.dim_PI = 4
-        self.dim_FF = 44
+        self.dim_FF = 9 # 44 zsy
 
         self.resNet = resNet()
         self.static_enrichment_module = StaticEnrichmentModule(input_dim=48, hidden_dim=48)

@@ -100,7 +100,7 @@ class BCGNet(nn.Module):
 
         self.dim_BCG = 1250
         self.dim_PI = 4
-        self.dim_FF = 44
+        self.dim_FF = 9  # change_by_zsy: 改为基于J峰的9维FF特征（原值44）
         self.dim_LAST_BP = 0
 
         self.bcg_feature_gen = U2Net(1,1)
@@ -119,7 +119,7 @@ class BCGNet(nn.Module):
         covar = x[:, -self.dim_PI - self.dim_FF:]
         last_BP = x [:, -2:]
 
-        recon_bcg, code = self.bcg_feature_gen(raw_bcg)
+        recon_bcg, code = self.bcg_feature_gen(raw_bcg)    # 重构的 BCG 信号
         # ecg_t = self.ecg_feature_gen(x[:, :, 1])
         mid_feature = torch.mean(code, 1)
         # feature = torch.cat((
